@@ -1,0 +1,23 @@
+Server de gestionare produse prin protocol text
+
+Serverul menține în memorie un dicționar:
+dic = {
+    "key": value,
+    "key2": value2
+}
+
+Comenzi obligatorii
+
+ADD -> param cheie valoare -> raspunde OK - record add 
+GET -> param cheie -> DATA valoare -> Daca nu exista cheia trebuie dat ERROR invalid key
+REMOVE -> param cheie -> OK value deleted -> Gestioneaza erorile
+
+Comenzi noi:
+LIST -> DATA|key=value,key2=value2,key3=value3
+COUNT -> DATA Countul elementelor
+CLEAR -> sterge tot -> raspuns all data deleted
+UPDATE -> param cheie new value -> raspuns Data updated
+POP ->param key -> returneaza valoarea -> Data value -> apoi sterge elementul din dictionar.
+Quit -> inchide aplicatia
+
+Se vor gestiona erorile si comenzile necunoscute
