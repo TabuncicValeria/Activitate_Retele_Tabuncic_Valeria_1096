@@ -1,0 +1,83 @@
+----------------------------------------------------
+  CE ESTE IMPLEMENTAT
+----------------------------------------------------
+
+[SERVER - server.py]
+  ✔  Initializarea si pornirea serverului UDP pe 127.0.0.1:9999
+  ✔  Receptia si decodificarea mesajelor de la clienti
+  ✔  Comanda CONNECT
+       - Inregistreaza adresa clientului in dictionar
+       - Raspunde cu eroare daca clientul este deja conectat
+       - Afiseaza numarul de clienti activi
+  ✔  Comanda DISCONNECT
+       - Elimina adresa clientului din dictionar
+       - Raspunde cu eroare daca clientul nu era inregistrat
+  ✔  Raspuns pentru comenzi necunoscute
+  ✔  Structura de baza: bucla de receptie, tratarea exceptiilor
+
+[CLIENT - client.py]
+  ✔  Initializarea socketului UDP cu timeout de 5 secunde
+  ✔  Functia trimite_comanda() : trimite mesaj si primeste raspuns
+  ✔  Comanda CONNECT
+       - Trimite cererea la server
+       - Actualizeaza variabila este_conectat = True la succes
+  ✔  Comanda DISCONNECT
+       - Trimite cererea la server
+       - Actualizeaza variabila este_conectat = False la succes
+  ✔  Comanda EXIT : inchide socketul si iese din aplicatie
+  ✔  Interfata simpla de tip linie de comanda (CLI)
+  ✔  Comenzile PUBLISH, DELETE, LIST sunt trimise la server
+       (serverul raspunde ca nu sunt implementate)
+
+
+----------------------------------------------------
+  CE RAMANE DE IMPLEMENTAT
+----------------------------------------------------
+
+[SERVER - server.py]  ★ OBLIGATORIU
+
+  ☐  Comanda PUBLISH
+       - Verifica daca clientul este conectat
+       - Verifica ca mesajul (argumentul) nu este gol
+       - Salveaza mesajul cu un ID unic intr-o lista/dictionar
+       - Raspunde cu "OK: Mesaj publicat cu ID=<id>"
+
+  ☐  Comanda DELETE
+       - Verifica daca clientul este conectat
+       - Verifica ca argumentul este un numar intreg valid
+       - Cauta mesajul cu ID-ul dat
+       - Verifica daca mesajul a fost publicat de clientul care face cererea
+         (doar autorul poate sterge propriul mesaj)
+       - Raspunde cu succes, eroare (ID negasit) sau eroare (nu esti autorul)
+
+  ☐  Comanda LIST
+       - Verifica daca clientul este conectat
+       - Construieste un raspuns cu toate mesajele (ID + text)
+       - Daca nu exista mesaje, raspunde cu mesaj corespunzator
+
+  ☐  Structura de stocare a mesajelor
+       - Declararea unei liste sau dictionar pentru mesaje
+       - Un contor sau mecanism pentru generarea ID-urilor unice
+
+  ☐  Verificarea permisiunii de conexiune (pe server)
+       - Inainte de procesarea comenzilor PUBLISH / DELETE / LIST,
+         serverul trebuie sa verifice daca adresa clientului se afla
+         in dictionar-ul clienti_conectati
+       - Daca nu este conectat, raspunde cu eroare
+
+[CLIENT - client.py]  ★ OBLIGATORIU
+
+  ☐  Verificarea locala a conexiunii (pentru PUBLISH, DELETE, LIST)
+       - Inainte de a trimite comanda la server, verifica variabila
+         este_conectat
+       - Daca valoarea este False, afiseaza un mesaj de eroare local
+         si nu mai trimite nimic la server
+       - Hint: foloseste "if not este_conectat: ... continue"
+
+  ☐  Validarea argumentelor pentru PUBLISH
+       - Verifica ca utilizatorul a furnizat un text dupa cuvantul PUBLISH
+       - Exemplu: "PUBLISH " fara text → eroare locala
+
+  ☐  Validarea argumentelor pentru DELETE
+       - Verifica ca argumentul furnizat este un numar intreg
+       - Exemplu: "DELETE abc" → eroare locala
