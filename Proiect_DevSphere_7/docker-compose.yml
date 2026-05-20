@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  server:
+    build: .
+    container_name: devsphere-server
+    ports:
+      - "65432:65432"
+    restart: always
